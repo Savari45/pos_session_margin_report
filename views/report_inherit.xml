@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend the POS session sales details report to show margin KPIs -->
+        <template id="pos_session_sales_details_inherit_margin" inherit_id="point_of_sale.pos_session_sales_details">
+            <xpath expr="//t[@id='closing_session']" position="after">
+                <div id="session_margin" style="break-inside: avoid; page-break-inside: avoid;">
+                    <h6 class="bg-secondary p-1 fw-bold">Margins</h6>
+                    <div class="row">
+                        <div class="col-12">
+                            <strong>Total margin</strong>:
+                            <t t-if="currency['position']">
+                                <span t-out="(session_total_margin or 0.0)" t-options="{'widget': 'float', 'precision': currency['precision']}">0.00</span>
+                                <span t-out='currency["symbol"]'>$</span>
+                            </t>
+                            <t t-else="">
+                                <span t-out='currency["symbol"]'>$</span>
+                                <span t-out="(session_total_margin or 0.0)" t-options="{'widget': 'float', 'precision': currency['precision']}">0.00</span>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <strong>Margin (%)</strong>:
+                            <span t-out="(session_margin_percent or 0.0)" t-options="{'widget': 'percentage'}">0.00%</span>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+    
+</odoo>
+
+
